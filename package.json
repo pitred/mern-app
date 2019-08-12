@@ -7,6 +7,7 @@
       "start": "npm-run-all -p -l start:*",
       "start:server": "cd server && node server.js",
       "start:client": "cd client && yarn start",
+      "postinstall": "run-p install:*",
       "gitignore": "curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore -o .gitignore"
    },
    "dependencies": {
