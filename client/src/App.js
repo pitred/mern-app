@@ -15,8 +15,8 @@ class App extends React.Component {
             <Switch>
                <Route path='/' exact component={Home} />
                <Route path='/posts' exact component={Posts} />
-               <Route path='/posts/:id' exact component={SinglePost} />
                <Route path='/posts/new' exact component={AddPost} />
+               <Route path='/posts/:id' exact component={SinglePost} />
                <Route path='/contact' exact component={Contact} />
                <Route component={NotFound} />
             </Switch>
