@@ -17,7 +17,7 @@ class Posts extends React.Component {
       if (request.pending === false && request.success === true && posts.data.length > 0) return <PostsList posts={posts} />;
       if (request.pending === true || request.success === null) return <Spinner />;
       if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
-      if (request.pending === false && request.success === true && posts.length === 0) return <Alert>No posts</Alert>;
+      if (request.pending === false && request.success === true && posts.data.length === 0) return <Alert>No posts</Alert>;
    }
 }
 
