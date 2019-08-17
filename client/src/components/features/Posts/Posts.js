@@ -2,8 +2,8 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import PostsList from '../PostsList/PostsList';
-
 import Spinner from '../../common/Spinner/Spinner';
+import Alert from '../../common/Alert/Alert';
 
 class Posts extends React.Component {
    componentDidMount() {
@@ -14,12 +14,10 @@ class Posts extends React.Component {
    render() {
       const { posts, request } = this.props;
 
-      return (
-         <div>
-            {request.pending && <Spinner />}
-            <PostsList posts={posts} />
-         </div>
-      );
+      if (request.pending === false && request.success === true && posts.length > 0) return <PostsList posts={posts} />;
+      if (request.pending === true || request.success === null) return <Spinner />;
+      if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
+      if (request.pending === false && request.success === true && posts.length === 0) return <Alert>No posts</Alert>;
    }
 }
 
