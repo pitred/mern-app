@@ -1,12 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-
 import Button from '../../common/Button/Button';
 import SmallTitle from '../../common/SmallTitle/SmallTitle';
-
 import './PostSummary.scss';
 import HtmlBox from '../../common/HtmlBox/HtmlBox';
-
 import cutText from '../../../utils/CutText/cutText';
 
 const PostSummary = ({ id, title, content }) => (
