@@ -1,5 +1,3 @@
-import React from 'react';
-
 const cutText = (content, maxLength) => {
    if (content.length < 1) return 'Error';
    if (content.length <= maxLength) return content;
