@@ -16,6 +16,9 @@ class SinglePost extends React.Component {
    render() {
       const { post, request } = this.props;
 
+      if (request.pending === true || request.success === null) return <Spinner />;
+      if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
+      if (request.pending === false && request.success === true && !post) return <Alert>No post</Alert>;
       if (request.pending === false && request.success === true && post)
          return (
             <div>
@@ -24,9 +27,6 @@ class SinglePost extends React.Component {
                <p>Author: {post.author}</p>
             </div>
          );
-      if (request.pending === true || request.success === null) return <Spinner />;
-      if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
-      if (request.pending === false && request.success === true && !post) return <Alert>No post</Alert>;
    }
 }
 
@@ -35,7 +35,8 @@ SinglePost.propTypes = {
       PropTypes.shape({
          id: PropTypes.string.isRequired,
          title: PropTypes.string.isRequired,
-         content: PropTypes.string.isRequired
+         content: PropTypes.string.isRequired,
+         author: PropTypes.string.isRequired
       })
    ),
    loadPosts: PropTypes.func.isRequired

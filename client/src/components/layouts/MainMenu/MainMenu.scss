@@ -1,13 +1,12 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
 
 .main-menu {
-  display: flex;
-  flex-wrap: wrap;
-  list-style-type: none;
-  padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
 
-  li {
-    margin: 0 $base-size;
-  }
-
+    li {
+        margin: 0 $base-size;
+    }
 }
