@@ -1,21 +1,24 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import Spinner from '../../common/Spinner/Spinner';
+import SmallTitle from '../../common/SmallTitle/SmallTitle';
 import Alert from '../../common/Alert/Alert';
 
 class SinglePost extends React.Component {
    componentDidMount() {
-      const { loadPosts } = this.props;
-      loadPosts();
+      const { loadPost, match } = this.props;
+      loadPost(match.params.id);
    }
-   render() {
-      const { posts, request } = this.props;
 
-      if (request.pending === false && request.success === true && posts.length > 0) return <Alert>{posts[0]}</Alert>;
+   render() {
+      const { post, request } = this.props;
+
+      if (request.pending === false && request.success === true && post) return <SmallTitle>{post.title}</SmallTitle>;
       if (request.pending === true || request.success === null) return <Spinner />;
       if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
-      if (request.pending === false && request.success === true && posts.length === 0) return <Alert>No posts</Alert>;
+      if (request.pending === false && request.success === true && !post) return <Alert>No post</Alert>;
    }
 }
 
@@ -30,4 +33,4 @@ SinglePost.propTypes = {
    loadPosts: PropTypes.func.isRequired
 };
 
-export default SinglePost;
+export default withRouter(props => <SinglePost {...props} />);
