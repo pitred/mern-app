@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import Spinner from '../../common/Spinner/Spinner';
 import SmallTitle from '../../common/SmallTitle/SmallTitle';
 import Alert from '../../common/Alert/Alert';
+import HtmlBox from '../../common/HtmlBox/HtmlBox';
 
 class SinglePost extends React.Component {
    componentDidMount() {
@@ -15,7 +16,14 @@ class SinglePost extends React.Component {
    render() {
       const { post, request } = this.props;
 
-      if (request.pending === false && request.success === true && post) return <SmallTitle>{post.title}</SmallTitle>;
+      if (request.pending === false && request.success === true && post)
+         return (
+            <div>
+               <SmallTitle>{post.title}</SmallTitle>
+               <HtmlBox>{post.content}</HtmlBox>
+               <p>Author: {post.author}</p>
+            </div>
+         );
       if (request.pending === true || request.success === null) return <Spinner />;
       if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
       if (request.pending === false && request.success === true && !post) return <Alert>No post</Alert>;
