@@ -9,4 +9,7 @@ router.route('/posts').get(PostController.getPosts);
 // get single post
 router.route('/posts/:id').get(PostController.getPost);
 
+// add posts
+router.route('/posts').post(PostController.addPost);
+
 module.exports = router;

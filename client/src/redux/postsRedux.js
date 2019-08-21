@@ -9,7 +9,6 @@ export const getRequest = ({ posts }) => posts.request;
 export const getSinglePost = ({ posts }) => posts.singlePost;
 
 /* ACTIONS */
-
 // action name creator
 const reducerName = 'posts';
 const createActionName = name => `app/${reducerName}/${name}`;
@@ -28,6 +27,9 @@ export const errorRequest = error => ({ error, type: ERROR_REQUEST });
 
 export const LOAD_SINGLE_POST = createActionName('LOAD_SINGLE_POST');
 export const loadSinglePost = payload => ({ payload, type: LOAD_SINGLE_POST });
+
+export const RESET_REQUEST = createActionName('RESET_REQUEST');
+export const resetRequest = () => ({ type: RESET_REQUEST });
 
 /* INITIAL STATE */
 
@@ -56,6 +58,8 @@ export default function reducer(statePart = initialState, action = {}) {
          return { ...statePart, request: { pending: false, error: null, success: true } };
       case ERROR_REQUEST:
          return { ...statePart, request: { pending: false, error: action.error, success: false } };
+      case RESET_REQUEST:
+         return { ...statePart, request: { pending: false, error: null, success: null } };
       case LOAD_SINGLE_POST:
          return { ...statePart, singlePost: action.payload };
       default:
@@ -86,6 +90,19 @@ export const loadSinglePostRequest = id => {
          let res = await axios.get(`${API_URL}/posts/${id}`);
          await new Promise((resolve, reject) => setTimeout(resolve, 2000));
          await dispatch(loadSinglePost(res.data[0]));
+         dispatch(endRequest());
+      } catch (e) {
+         dispatch(errorRequest(e.message));
+      }
+   };
+};
+
+export const addPostRequest = post => {
+   return async dispatch => {
+      dispatch(startRequest());
+      try {
+         let res = await axios.post(`${API_URL}/posts`, post);
+         await new Promise((resolve, reject) => setTimeout(resolve, 2000));
          dispatch(endRequest());
       } catch (e) {
          dispatch(errorRequest(e.message));
