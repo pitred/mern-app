@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-   loadPostByPage: page => dispatch(loadPostsByPageRequest(page))
+   loadPostsByPage: page => dispatch(loadPostsByPageRequest(page))
 });
 
 export default connect(

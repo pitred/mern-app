@@ -23,6 +23,7 @@ class Pagination extends React.Component {
       return (
          <div className='pagination'>
             <ul className='pagination__list'>
+               <span className='pagination__arrow'>left</span>
                {[...Array(pages)].map((el, page) => (
                   <li
                      key={++page}
@@ -33,6 +34,7 @@ class Pagination extends React.Component {
                      {page}
                   </li>
                ))}
+               <span className='pagination__arrow'>right</span>
             </ul>
          </div>
       );

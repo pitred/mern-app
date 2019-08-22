@@ -59,11 +59,8 @@ class PostForm extends React.Component {
          return (
             <form onSubmit={addPost}>
                <TextField label='Title' value={post.title} onChange={handleChange} name='title' />
-
                <TextField label='Author' value={post.author} onChange={handleChange} name='author' />
-
                <SectionTitle>Edit post content</SectionTitle>
-
                <Editor
                   className='content-editor'
                   tag='pre'
@@ -76,7 +73,6 @@ class PostForm extends React.Component {
                      }
                   }}
                />
-
                <Button variant='primary'>Add post</Button>
             </form>
          );

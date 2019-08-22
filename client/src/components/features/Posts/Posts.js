@@ -8,23 +8,24 @@ import Pagination from '../../common/Pagination/Pagination';
 
 class Posts extends React.Component {
    componentDidMount() {
-      const { loadPostByPage } = this.props;
-      loadPostByPage(1);
+      const { loadPostsByPage } = this.props;
+      loadPostsByPage(1);
    }
 
+   loadPostsPage = page => {
+      const { loadPostsByPage } = this.props;
+      loadPostsByPage(page);
+   };
+
    render() {
-      const { posts, request } = this.props;
+      const { posts, request, pages } = this.props;
+      const { loadPostsPage } = this;
 
       if (request.pending === false && request.success === true && posts.length > 0)
          return (
             <div>
                <PostsList posts={posts} />
-               <Pagination
-                  pages={10}
-                  onPageChange={page => {
-                     console.log(page);
-                  }}
-               />
+               <Pagination pages={pages} onPageChange={loadPostsPage} />
             </div>
          );
       if (request.pending === true || request.success === null) return <Spinner />;
