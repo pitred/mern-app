@@ -1,29 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import './Pagination.scss';
 
-class Pagination extends React.Component {
+class Pagination extends Component {
    state = {
       presentPage: this.props.initialPage || 1
    };
 
    changePage = newPage => {
       const { onPageChange } = this.props;
-
       this.setState({ presentPage: newPage });
       onPageChange(newPage);
    };
 
-   render() {
-      const { pages, onPageChange } = this.props;
-      const { presentPage } = this.state;
+   skipToPage = increment => {
       const { changePage } = this;
+      const { presentPage } = this.state;
+      const targetPage = presentPage + increment;
+      changePage(targetPage);
+   };
+
+   render() {
+      const { pages } = this.props;
+      const { presentPage } = this.state;
+      const { changePage, skipToPage } = this;
 
       return (
          <div className='pagination'>
             <ul className='pagination__list'>
-               <span className='pagination__arrow'>left</span>
+               {presentPage >= 2 && (
+                  <li className='pagination__list__item'>
+                     <FontAwesomeIcon
+                        icon={faChevronLeft}
+                        onClick={() => {
+                           skipToPage(-1);
+                        }}
+                     />
+                  </li>
+               )}
+
                {[...Array(pages)].map((el, page) => (
                   <li
                      key={++page}
@@ -34,7 +51,17 @@ class Pagination extends React.Component {
                      {page}
                   </li>
                ))}
-               <span className='pagination__arrow'>right</span>
+
+               {presentPage !== pages && (
+                  <li className='pagination__list__item'>
+                     <FontAwesomeIcon
+                        icon={faChevronRight}
+                        onClick={() => {
+                           skipToPage(1);
+                        }}
+                     />
+                  </li>
+               )}
             </ul>
          </div>
       );
