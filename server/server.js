@@ -3,6 +3,7 @@ const cors = require('cors');
 const config = require('./config');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const mongoSanitize = require('mongo-sanitize');
 
 const loadTestData = require('./testData');
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', postRoutes);
 app.use(helmet());
+app.use(mongoSanitize());
 
 // connect our back end code with the database
 mongoose.connect(config.DB, { useNewUrlParser: true });
