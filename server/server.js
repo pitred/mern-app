@@ -3,7 +3,7 @@ const cors = require('cors');
 const config = require('./config');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const mongoSanitize = require('mongo-sanitize');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const loadTestData = require('./testData');
 
