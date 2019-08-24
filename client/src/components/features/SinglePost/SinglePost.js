@@ -3,43 +3,64 @@ import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import Spinner from '../../common/Spinner/Spinner';
-import SmallTitle from '../../common/SmallTitle/SmallTitle';
 import Alert from '../../common/Alert/Alert';
+import SmallTitle from '../../common/SmallTitle/SmallTitle';
 import HtmlBox from '../../common/HtmlBox/HtmlBox';
+
+import '../PostSummary/PostSummary.scss';
 
 class SinglePost extends React.Component {
    componentDidMount() {
-      const { loadPost, match } = this.props;
-      loadPost(match.params.id);
+      const { loadSinglePost, id, resetRequestStatus } = this.props;
+      resetRequestStatus();
+      loadSinglePost(id);
    }
 
    render() {
-      const { post, request } = this.props;
+      const { singlePost, request } = this.props;
 
-      if (request.pending === true || request.success === null) return <Spinner />;
-      if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
-      if (request.pending === false && request.success === true && !post) return <Alert>No post</Alert>;
-      if (request.pending === false && request.success === true && post)
+      if (request.pending === false && request.success === true && singlePost) {
          return (
             <div>
-               <SmallTitle>{post.title}</SmallTitle>
-               <HtmlBox>{post.content}</HtmlBox>
-               <p>Author: {post.author}</p>
+               <article className='post-summary'>
+                  <SmallTitle>{singlePost.title}</SmallTitle>
+                  <p>author: {singlePost.author}</p>
+                  <HtmlBox>{singlePost.content}</HtmlBox>
+               </article>
             </div>
          );
+      } else if (request.pending === true && request.success === null) {
+         return (
+            <div>
+               <Spinner />
+            </div>
+         );
+      } else if (request.pending === false && request.error !== null) {
+         return (
+            <div>
+               <Alert variant='error'>{request.error}</Alert>
+            </div>
+         );
+      } else if (request.pending === false && request.success === true && singlePost === null) {
+         return (
+            <div>
+               <Alert variant='info'>No post</Alert>
+            </div>
+         );
+      } else {
+         return <div />;
+      }
    }
 }
 
 SinglePost.propTypes = {
-   posts: PropTypes.arrayOf(
-      PropTypes.shape({
-         id: PropTypes.string.isRequired,
-         title: PropTypes.string.isRequired,
-         content: PropTypes.string.isRequired,
-         author: PropTypes.string.isRequired
-      })
-   ),
-   loadPosts: PropTypes.func.isRequired
+   singlePost: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired
+   }),
+   loadSinglePost: PropTypes.func.isRequired
 };
 
 export default withRouter(props => <SinglePost {...props} />);

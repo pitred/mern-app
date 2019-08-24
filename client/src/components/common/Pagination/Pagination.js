@@ -4,15 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import './Pagination.scss';
 
-class Pagination extends Component {
+class Pagination extends React.Component {
    state = {
       presentPage: this.props.initialPage || 1
    };
 
    changePage = newPage => {
-      const { onPageChange } = this.props;
+      const { onPageChange, postsPerPage } = this.props;
       this.setState({ presentPage: newPage });
-      onPageChange(newPage);
+      onPageChange(newPage, postsPerPage);
    };
 
    skipToPage = increment => {
@@ -71,7 +71,8 @@ class Pagination extends Component {
 Pagination.propTypes = {
    pages: PropTypes.number.isRequired,
    initialPage: PropTypes.number,
-   onPageChange: PropTypes.func.isRequired
+   onPageChange: PropTypes.func.isRequired,
+   postsPerPage: PropTypes.number
 };
 
 export default Pagination;

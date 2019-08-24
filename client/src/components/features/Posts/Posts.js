@@ -7,30 +7,65 @@ import Alert from '../../common/Alert/Alert';
 import Pagination from '../../common/Pagination/Pagination';
 
 class Posts extends React.Component {
+   // new add
+   state = {
+      initialPage: this.props.initialPage || 1,
+      postsPerPage: this.props.postsPerPage || 10,
+      pagination: this.props.pagination
+   };
+   //
    componentDidMount() {
-      const { loadPostsByPage } = this.props;
-      loadPostsByPage(1);
+      const { loadPostsByPage, resetRequestStatus } = this.props; // new add
+      const { initialPage, postsPerPage } = this.state; // new add
+      resetRequestStatus(); // new add
+      loadPostsByPage(initialPage, postsPerPage); // new add
    }
 
    loadPostsPage = page => {
       const { loadPostsByPage } = this.props;
-      loadPostsByPage(page);
+      const { postsPerPage } = this.state; // new add
+      loadPostsByPage(page, postsPerPage); // new add
    };
 
    render() {
-      const { posts, request, pages } = this.props;
+      const { pagination, postsPerPage } = this.state; // new add
+      const { posts, request, postsNumber, pages, presentPage } = this.props;
       const { loadPostsPage } = this;
 
-      if (request.pending === false && request.success === true && posts.length > 0)
+      if (request.pending === false && request.success === true && postsNumber > 0 && !pagination) {
          return (
             <div>
                <PostsList posts={posts} />
-               <Pagination pages={pages} onPageChange={loadPostsPage} />
             </div>
          );
-      if (request.pending === true || request.success === null) return <Spinner />;
-      if (request.pending === false && request.error != null) return <Alert>{request.error.message}</Alert>;
-      if (request.pending === false && request.success === true && posts.length === 0) return <Alert>No posts</Alert>;
+      } else if (request.pending === false && request.success === true && postsNumber > 0 && pagination) {
+         return (
+            <div>
+               <PostsList posts={posts} />
+               <Pagination pages={pages} initialPage={presentPage} onPageChange={loadPostsPage} postsPerPage={postsPerPage} />
+            </div>
+         );
+      } else if (request.pending === true && request.success === null) {
+         return (
+            <div>
+               <Spinner />
+            </div>
+         );
+      } else if (request.pending === false && request.error != null) {
+         return (
+            <div>
+               <Alert variant='error'>{request.error.message}</Alert>;
+            </div>
+         );
+      } else if (request.pending === false && request.success === true && postsNumber === 0) {
+         return (
+            <div>
+               <Alert variant='info'>No posts</Alert>
+            </div>
+         );
+      } else {
+         return <div />;
+      }
    }
 }
 
@@ -43,7 +78,14 @@ Posts.propTypes = {
          author: PropTypes.string.isRequired
       })
    ),
-   loadPostsByPage: PropTypes.func.isRequired
+   request: PropTypes.object.isRequired,
+   postsNumber: PropTypes.number.isRequired,
+   loadPostsByPage: PropTypes.func.isRequired,
+   resetRequestStatus: PropTypes.number.isRequired,
+   presentPage: PropTypes.number.isRequired,
+   initialPage: PropTypes.number,
+   postsPerPage: PropTypes.number,
+   pagination: PropTypes.bool
 };
 
 export default Posts;
