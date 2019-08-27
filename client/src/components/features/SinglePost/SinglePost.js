@@ -26,7 +26,7 @@ class SinglePost extends React.Component {
             <div>
                <article className='post-summary'>
                   <SmallTitle>{singlePost.title}</SmallTitle>
-                  <p>author: {singlePost.author}</p>
+                  <div>author: {singlePost.author}</div>
                   <HtmlBox>{singlePost.content}</HtmlBox>
                   <FacebookProvider appId='488475995284451'>
                      <ShareButton className='button button-primary' href={`${BASE_URL}${location.pathname}`}>
