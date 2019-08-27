@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { FacebookProvider, Comments, ShareButton } from 'react-facebook';
 
 import Spinner from '../../common/Spinner/Spinner';
 import Alert from '../../common/Alert/Alert';
@@ -8,6 +9,7 @@ import SmallTitle from '../../common/SmallTitle/SmallTitle';
 import HtmlBox from '../../common/HtmlBox/HtmlBox';
 
 import '../PostSummary/PostSummary.scss';
+import { BASE_URL } from '../../../../src/config';
 
 class SinglePost extends React.Component {
    componentDidMount() {
@@ -17,7 +19,7 @@ class SinglePost extends React.Component {
    }
 
    render() {
-      const { singlePost, request } = this.props;
+      const { singlePost, request, location } = this.props;
 
       if (request.pending === false && request.success === true && singlePost) {
          return (
@@ -26,6 +28,12 @@ class SinglePost extends React.Component {
                   <SmallTitle>{singlePost.title}</SmallTitle>
                   <p>author: {singlePost.author}</p>
                   <HtmlBox>{singlePost.content}</HtmlBox>
+                  <FacebookProvider appId='488475995284451'>
+                     <ShareButton className='button button-primary' href={`${BASE_URL}${location.pathname}`}>
+                        Share
+                     </ShareButton>
+                     <Comments href={`${BASE_URL}${location.pathname}`} />
+                  </FacebookProvider>
                </article>
             </div>
          );
