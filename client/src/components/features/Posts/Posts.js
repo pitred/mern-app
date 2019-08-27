@@ -15,20 +15,20 @@ class Posts extends React.Component {
    };
    //
    componentDidMount() {
-      const { loadPostsByPage, resetRequestStatus } = this.props; // new add
-      const { initialPage, postsPerPage } = this.state; // new add
-      resetRequestStatus(); // new add
-      loadPostsByPage(initialPage, postsPerPage); // new add
+      const { loadPostsByPage, resetRequestStatus } = this.props;
+      const { initialPage, postsPerPage } = this.state;
+      resetRequestStatus();
+      loadPostsByPage(initialPage, postsPerPage);
    }
 
    loadPostsPage = page => {
       const { loadPostsByPage } = this.props;
-      const { postsPerPage } = this.state; // new add
-      loadPostsByPage(page, postsPerPage); // new add
+      const { postsPerPage } = this.state;
+      loadPostsByPage(page, postsPerPage);
    };
 
    render() {
-      const { pagination, postsPerPage } = this.state; // new add
+      const { pagination, postsPerPage } = this.state;
       const { posts, request, postsNumber, pages, presentPage } = this.props;
       const { loadPostsPage } = this;
 
@@ -81,7 +81,7 @@ Posts.propTypes = {
    request: PropTypes.object.isRequired,
    postsNumber: PropTypes.number.isRequired,
    loadPostsByPage: PropTypes.func.isRequired,
-   resetRequestStatus: PropTypes.number.isRequired,
+   resetRequestStatus: PropTypes.func.isRequired,
    presentPage: PropTypes.number.isRequired,
    initialPage: PropTypes.number,
    postsPerPage: PropTypes.number,

@@ -7,13 +7,11 @@ import SinglePost from './components/pages/SinglePost/SinglePostPage';
 import AddPost from './components/pages/AddPost/AddPostPage';
 import Contact from './components/pages/Contact/ContactPage';
 import NotFound from './components/pages/NotFound/NotFoundPage';
-import Logo from './components/common/Logo/Logo';
 
 class App extends React.Component {
    render() {
       return (
          <MainLayout>
-            <div>{Logo}</div>
             <Switch>
                <Route path='/' exact component={Home} />
                <Route path='/posts' exact component={Posts} />

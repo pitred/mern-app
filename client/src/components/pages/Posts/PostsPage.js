@@ -11,5 +11,5 @@ const PostsPage = () => (
       <Posts initialPage={1} postsPerPage={10} pagination={true} />
    </div>
 );
-// add pagination
+
 export default PostsPage;

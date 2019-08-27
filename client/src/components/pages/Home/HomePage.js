@@ -8,5 +8,5 @@ const HomePage = () => (
       <Posts postsPerPage={3} pagination={false} />
    </div>
 );
-// add pagination to posts
+
 export default HomePage;
