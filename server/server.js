@@ -36,3 +36,4 @@ db.on('error', err => console.log('Error ' + err));
 app.listen(config.PORT, () => {
    console.log('Server is running on port: ', config.PORT);
 });
+console.log(`process.env.DB`);
